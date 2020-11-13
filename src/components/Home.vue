@@ -22,10 +22,12 @@
               </tr>
             </thead>
             <tbody>
-             
-              <tr><td>Chevrolet</td><td><button class="btn">Ver modelos</button></td></tr>
-              <tr><td>Fiat</td><td><button class="btn">Ver modelos</button></td></tr>
-              <tr><td>Ford</td><td><button class="btn">Ver modelos</button></td></tr>
+              <tr v-for="item in marcas" :key="item.codigo">
+                <td>{{ item.nome }}</td> 
+                <td>
+                  <button class="btn" v-bind:class="{ 'active':  codigoAtivo  == item.codigo }" v-on:click="carregaModelos(item.codigo)">Ver modelos</button>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -44,9 +46,9 @@
               </tr>
             </thead>
             <tbody>
-              <tr><td>Onix</td></tr>
-              <tr><td>Prisma</td></tr>
-
+              <tr v-for="item_modelo in modelos" :key="item_modelo.codigo">
+                <td>{{ item_modelo.nome }}</td> 
+              </tr>
             </tbody>
           </table>
         </div>
@@ -67,6 +69,37 @@
 import axios from 'axios'
 export default {
   name: 'Home',
+  data () {
+    return {
+      marcas: null,
+      modelos: null,
+      codigoAtivo: ''
+    }
+  },
+  mounted () {
+    axios
+      .get('https://parallelum.com.br/fipe/api/v1/carros/marcas')
+      .then(response => {
+        this.marcas = response.data;
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  },
+  methods: {
+    carregaModelos: function (id_marca) {
+      console.log(id_marca);
+      this.codigoAtivo = id_marca;
+      axios
+        .get('https://parallelum.com.br/fipe/api/v1/carros/marcas/'+id_marca+'/modelos')
+        .then(response => {
+          this.modelos = response.data.modelos;
+        })
+        .catch(error => {
+          console.log(error)
+        })
+      }
+  }
 
 }
 </script>
@@ -107,19 +140,44 @@ export default {
     padding: 1.5em 1em;
   }
 
-  .table{
-    border-collapse: collapse;
+  table {
+    display: flex;
+    flex-flow: column;
+    height: 25em;
     width: 100%;
+    border-collapse: collapse;
   }
-  .table th, tr, td {
+
+  table thead {
+      flex: 0 0 auto;
+      width: calc(100% - 0.9em);
+  }
+
+  table tbody {
+      flex: 1 1 auto;
+      display: block;
+      overflow-y: scroll;
+  }
+
+  table tbody tr {
+      width: 100%;
+  }
+
+  table td{
+    width: 50%;
+  }
+
+  table thead,
+  table tbody tr {
+      display: table;
+      table-layout: fixed;
+  }
+
+  table th, tr, td {
     border-top: 1px solid #E3E6F0;
     border-bottom: 1px solid #E3E6F0;
     text-align: start;
     padding: 0.9em 0.6em;
-  }
-
-  .table td{
-    width: 50%;
   }
 
   .btn{
@@ -128,6 +186,10 @@ export default {
     border: 0px;
     color: #4E73DF;
     font-size: 0.9em;
+  }
+
+  .active, .btn:hover {
+    color: #1CC88A;
   }
 
   #rodape{
