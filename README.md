@@ -7,7 +7,7 @@ O projeto consiste em listar marcas de carros e seus respectivos modelos contido
 #### Primeiro instalar as dependências
 $ npm install
 
-#### Rodar o comando a baixo no terminar para executar a aplicação
+#### Para executar a aplicação use:
 $ npm run dev
 
 #### A aplicação estará rodando em:
