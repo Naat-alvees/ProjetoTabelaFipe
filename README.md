@@ -1,21 +1,14 @@
-# proj-tabela-fipe
+# Projeto Tabela FIPE
 
-> A Vue.js project
+O projeto consiste em listar marcas de carros e seus respectivos modelos contidos na tabela FIPE obtidos através de uma API. 
 
-## Build Setup
+## Instruções para executar o projeto
 
-``` bash
-# install dependencies
-npm install
+#### Primeiro instalar as dependências
+$ npm install
 
-# serve with hot reload at localhost:8080
-npm run dev
+#### Rodar o comando a baixo no terminar para executar a aplicação
+$ npm run dev
 
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+#### A aplicação estará rodando em:
+localhost:8080
